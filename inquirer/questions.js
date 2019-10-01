@@ -9,8 +9,8 @@ module.exports = {
                 type: 'checkbox',
                 name: 'clients',
                 message: 'Qual cliente?',
-                choices: ['ILC', 'SAT'],
-                default: ['ILC']
+                choices: ['ILC-Cubo', 'ILC-Mirassol', 'SAT'],
+                default: ['ILC-Cubo']
             }
         // ]
         return inquirer.prompt(template)

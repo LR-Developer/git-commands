@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const clear = require('clear')
 const chalk = require('chalk')
 const figlet = require('figlet')
@@ -38,13 +40,15 @@ const run = async () => {
 
         console.log('')
 
-        if (answerA.clients[0] == 'ILC' && answerB.environments[0] == 'HM' && answerC.remotes[0] == 'origin') {
-            const result = await ilc.updateCubo('/home/lr-developer/ghr/git-da-salvacao', answerC.remotes[0], 'master')
+        if (answerA.clients[0] == 'ILC-Cubo') {
+            // const result = await ilc.updateCubo('/home/lr-developer/ghr/git-da-salvacao', answerC.remotes[0], 'master')
+            const result = await ilc.updateIlcCubo('/home/vagrant/estudos/git-da-salvacao', process.env.ILC_CUBO_REPO, process.env.ILC_CUBO_BRANCH_DESTINO)
         }
 
 
     } catch (error) {
 
+        console.error(error)
     }
 }
 

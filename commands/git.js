@@ -59,12 +59,37 @@ module.exports = {
             spinner.stop()
             console.log(chalk.green('✓ Pull realizado!'))
 
+        } catch (error) {
+
+            console.error(error)
+
+        }
+
+    },
+
+    merge: async(workDir, remote, branchOrigem) => {
+
+        const spinner = new Spinner('Estragando tudo. Aguarde...')
+        spinner.start()
+
+        try {
+
+            const result = await git(workDir).raw(
+                [
+                    'merge',
+                    '--no-ff',
+                    remote + '/' + branchOrigem
+                ]
+            )
+
+            spinner.stop()
+
             console.log('')
 
             return result
-
+            
         } catch (error) {
-
+            
             console.error(error)
 
         }
