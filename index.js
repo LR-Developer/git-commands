@@ -2,7 +2,7 @@ const clear = require('clear')
 const chalk = require('chalk')
 const figlet = require('figlet')
 
-const git = require('./commands/git')
+const ilc = require('./workflow/ilc')
 const questions = require('./inquirer/questions')
 
 clear()
@@ -36,9 +36,10 @@ const run = async () => {
             process.end()
         }
 
+        console.log('')
+
         if (answerA.clients[0] == 'ILC' && answerB.environments[0] == 'HM' && answerC.remotes[0] == 'origin') {
-            const result = await git.updateDevelopCubo('/home/lr-developer/ghr/git-da-salvacao')
-            console.log(result)
+            const result = await ilc.updateCubo('/home/lr-developer/ghr/git-da-salvacao', answerC.remotes[0], 'master')
         }
 
 
