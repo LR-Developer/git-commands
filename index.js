@@ -3,7 +3,7 @@ const chalk = require('chalk')
 const figlet = require('figlet')
 
 const git = require('./commands/git')
-const inquirer = require('./inquirer')
+const questions = require('./inquirer/questions')
 
 clear()
 console.log(
@@ -15,18 +15,32 @@ console.log(
 const run = async () => {
 
     try {
-        const answer = await inquirer.askWhosTheClient()
+        const answerA = await questions.askWhosTheClient()
 
-        if (!answer.clients.length) {
+        if (!answerA.clients.length) {
             console.log(chalk.red('x Escolha um cliente, ow animal!'))
             process.end()
         }
 
-        if (answer.clients[0] == 'ILC') {
+        const answerB = await questions.askEnvironment()
+
+        if (!answerB.environments.length) {
+            console.log(chalk.red('x Escolha um ambiente, ow animal!'))
+            process.end()
+        }
+
+        const answerC = await questions.askRemote()
+
+        if (!answerC.remotes.length) {
+            console.log(chalk.red('x Escolha um repositório, ow animal!'))
+            process.end()
+        }
+
+        if (answerA.clients[0] == 'ILC' && answerB.environments[0] == 'HM' && answerC.remotes[0] == 'origin') {
             const result = await git.updateDevelopCubo('/home/lr-developer/ghr/git-da-salvacao')
-            console.log(chalk.green('✓ Pull realizado!'))
             console.log(result)
         }
+
 
     } catch (error) {
 

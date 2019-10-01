@@ -3,6 +3,8 @@ const chalk = require('chalk')
 const CLI = require('clui')
 const Spinner = CLI.Spinner
 
+const spinner = new Spinner('Getting things done. Just wait bitch...')
+
 module.exports = {
 
     status: async (workDir) => {
@@ -18,10 +20,26 @@ module.exports = {
         }
     },
 
+    fetch: async (workDir, remote) => {
+
+        spinner.start()
+
+        try {
+
+            const response = await git(workDir).fetch(remote)
+            spinner.stop()
+            return response
+
+        } catch (error) {
+
+            console.error(error)
+
+        }
+    },
+
     updateDevelopCubo: async (workDir) => {
 
-        const status = new Spinner('Getting things done. Just wait bitch...')
-        status.start()
+        spinner.start()
 
         try {
 
@@ -30,19 +48,21 @@ module.exports = {
                     'checkout',
                     'master'
                 ]
-            )            
-            
+            )
+
             console.log(chalk.green('✓ Checkout realizado!'))
 
             const test = await git(workDir).pull('origin', 'master')
+
+            spinner.stop()
+            console.log(chalk.green('✓ Pull realizado!'))
+
             return test
-            
+
         } catch (error) {
-            
+
             console.error(error)
-            
-        } finally {
-            status.stop()    
+
         }
 
     }
